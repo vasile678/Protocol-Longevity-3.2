@@ -1,0 +1,6 @@
+{
+  "name": "Longevity 3.2 — Personal Healthspan OS",
+  "description": "Sistem de operare personal pentru longevitate și sănătate bazat pe protocolul guvernat 3.2: somn, fitness, nutriție, suplimente, analize de laborator și asistent AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a101d" />
+      <stop offset="100%" stop-color="#050811" />
+    </linearGradient>
+    <linearGradient id="longevityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)" />
+  <circle cx="256" cy="256" r="190" stroke="#1e293b" stroke-width="2" fill="none" opacity="0.6" />
+  <circle cx="256" cy="256" r="140" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 8" fill="none" opacity="0.5" />
+  
+  <!-- Outer Helix / Ring -->
+  <path d="M 140 256 C 140 180, 200 130, 280 130 C 350 130, 390 180, 380 230 C 370 280, 320 310, 260 310 C 200 310, 160 350, 160 390 C 160 410, 180 430, 220 430" 
+        stroke="url(#longevityGrad)" stroke-width="20" stroke-linecap="round" fill="none" />
+  
+  <!-- Interlocking pulse / core node -->
+  <circle cx="256" cy="256" r="28" fill="#0f172a" stroke="url(#longevityGrad)" stroke-width="8" />
+  <circle cx="256" cy="256" r="12" fill="#10b981" />
+  
+  <!-- Small satellite nodes indicating metrics -->
+  <circle cx="280" cy="130" r="10" fill="#06b6d4" />
+  <circle cx="380" cy="230" r="8" fill="#3b82f6" />
+  <circle cx="220" cy="430" r="9" fill="#10b981" />
+  
+  <!-- Submark text -->
+  <text x="256" y="475" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="700" letter-spacing="4" fill="#94a3b8">LONGEVITY 3.2</text>
+</svg>
