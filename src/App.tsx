@@ -483,9 +483,9 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-4xl mx-auto pt-2 px-1">
-        {showStorageWarning && (
-          <div className="px-4 mb-2">
+      <main className="flex-1 w-full max-w-4xl mx-auto pt-2 px-3 sm:px-4 pb-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] overflow-x-hidden">
+        {!isMemoryActive && showStorageWarning && (
+          <div className="mb-3">
             <StorageWarningBanner onDismiss={() => setShowStorageWarning(false)} />
           </div>
         )}
@@ -500,11 +500,14 @@ export default function App() {
             intakes={intakes}
             todayWorkouts={workouts.filter(w => w.date === selectedDate)}
             aiInsights={aiInsights}
+            biomarkers={biomarkers}
+            labResults={labResults}
             longitudinalShifts={longitudinalShifts}
             onUpdateDailyLog={handleUpdateDailyLog}
             onToggleSupplementIntake={handleToggleSupplementIntake}
             onNavigateToTab={setCurrentTab}
             onUpdateInsightFeedback={handleUpdateInsightFeedback}
+            onOpenSettings={() => setIsSettingsOpen(true)}
           />
         )}
 

@@ -22,7 +22,7 @@ export const OfflineIndicator: React.FC = () => {
   if (isOnline) return null;
 
   return (
-    <div className="fixed top-16 left-4 right-4 z-50 flex items-center gap-2 rounded-xl bg-amber-950/90 border border-amber-800/80 p-3 text-xs text-amber-200 shadow-xl backdrop-blur-md">
+    <div className="fixed top-[calc(env(safe-area-inset-top,0px)+3.75rem)] left-4 right-4 z-50 flex items-center gap-2 rounded-xl bg-amber-950/90 border border-amber-800/80 p-3 text-xs text-amber-200 shadow-xl backdrop-blur-md">
       <WifiOff className="w-4 h-4 text-amber-400 shrink-0" />
       <span className="flex-1 font-medium">
         Mod Offline — Baza de date locală este pe deplin activă. Datele tale rămân securizate pe dispozitiv.
