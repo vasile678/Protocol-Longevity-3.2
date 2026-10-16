@@ -215,7 +215,7 @@ export const TodayTab: React.FC<TodayTabProps> = ({
 
   // --- 3. RECENT LABS & TRENDS COMPACT SUMMARY ---
   // Sort labResults descending by testDate
-  const sortedLabResults = [...labResults].sort((a, b) => {
+  const sortedLabResults = [...(labResults || [])].sort((a, b) => {
     return new Date(b.testDate).getTime() - new Date(a.testDate).getTime();
   });
   const recentLabs = sortedLabResults.slice(0, 3);

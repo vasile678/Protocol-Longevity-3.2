@@ -37,6 +37,7 @@ import {
   LabResultAlert,
   UserProfile
 } from '../types/protocol';
+import { PROTOCOL_BIOMARKERS } from '../data/protocolData';
 import { formatRomanianDate, formatShortDate } from '../utils/calculations';
 import {
   evaluateLabResultAlert,
@@ -69,7 +70,13 @@ export const LabTestsTab: React.FC<LabTestsTabProps> = ({
   onToggleBiomarkerAlerts,
   onAcknowledgeAlert
 }) => {
-  const [selectedBiomarkerId, setSelectedBiomarkerId] = useState<string>(biomarkers[0]?.id || 'apob');
+  const safeBiomarkers = useMemo(() => {
+    return biomarkers && biomarkers.length > 0 ? biomarkers : PROTOCOL_BIOMARKERS;
+  }, [biomarkers]);
+
+  const [selectedBiomarkerId, setSelectedBiomarkerId] = useState<string>(() => {
+    return (biomarkers && biomarkers[0]?.id) || PROTOCOL_BIOMARKERS[0].id;
+  });
   const [showAddResultModal, setShowAddResultModal] = useState(false);
   const [showDocUploadModal, setShowDocUploadModal] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
@@ -89,13 +96,18 @@ export const LabTestsTab: React.FC<LabTestsTabProps> = ({
   const [uploadFileSize, setUploadFileSize] = useState(0);
   const [ocrSimulatedText, setOcrSimulatedText] = useState('');
 
-  const currentBiomarker = biomarkers.find(b => b.id === selectedBiomarkerId) || biomarkers[0];
+  const currentBiomarker = useMemo(() => {
+    return safeBiomarkers.find(b => b.id === selectedBiomarkerId) || safeBiomarkers[0] || PROTOCOL_BIOMARKERS[0];
+  }, [safeBiomarkers, selectedBiomarkerId]);
+
   const isCurrentBiomarkerAlertsEnabled = isBiomarkerAlertEnabled(currentBiomarker.id, currentBiomarker, userProfile);
 
   // Filter results for selected biomarker
-  const biomarkerResults = results
-    .filter(r => r.biomarkerId === currentBiomarker.id)
-    .sort((a, b) => a.testDate.localeCompare(b.testDate));
+  const biomarkerResults = useMemo(() => {
+    return (results || [])
+      .filter(r => r.biomarkerId === currentBiomarker.id)
+      .sort((a, b) => (a.testDate || '').localeCompare(b.testDate || ''));
+  }, [results, currentBiomarker.id]);
 
   const latestResult = biomarkerResults[biomarkerResults.length - 1];
 
@@ -112,16 +124,17 @@ export const LabTestsTab: React.FC<LabTestsTabProps> = ({
 
   // Global active alerts across all biomarkers
   const activeAlerts = useMemo(() => {
-    return getActiveAlerts(results).filter(a => {
-      const bio = biomarkers.find(b => b.id === a.biomarkerId);
+    return getActiveAlerts(results || []).filter(a => {
+      const bio = safeBiomarkers.find(b => b.id === a.biomarkerId);
       return isBiomarkerAlertEnabled(a.biomarkerId, bio, userProfile);
     });
-  }, [results, biomarkers, userProfile]);
+  }, [results, safeBiomarkers, userProfile]);
 
   // 6-month cadence monitoring calculation
   const getCadenceCountdown = () => {
-    if (results.length === 0) return { days: 0, status: 'Nicio analiză înregistrată încă' };
-    const latestDate = results.map(r => r.testDate).sort().reverse()[0];
+    if (!results || results.length === 0) return { days: 0, status: 'Nicio analiză înregistrată încă' };
+    const latestDate = results.map(r => r.testDate).filter(Boolean).sort().reverse()[0];
+    if (!latestDate) return { days: 0, status: 'Nicio analiză înregistrată încă' };
     const latest = new Date(latestDate);
     const nextDue = new Date(latest);
     nextDue.setMonth(nextDue.getMonth() + 6);
@@ -401,11 +414,11 @@ export const LabTestsTab: React.FC<LabTestsTabProps> = ({
             Selectează Biomarker din Protocol
           </span>
           <span className="text-[10px] text-slate-500">
-            {biomarkers.length} biomarkeri monitorizați
+            {safeBiomarkers.length} biomarkeri monitorizați
           </span>
         </div>
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {biomarkers.map(b => {
+          {safeBiomarkers.map(b => {
             const isSelected = b.id === currentBiomarker.id;
             const bResults = results.filter(r => r.biomarkerId === b.id);
             const latest = bResults[bResults.length - 1];
@@ -793,7 +806,7 @@ export const LabTestsTab: React.FC<LabTestsTabProps> = ({
             </div>
 
             <div className="space-y-2">
-              {biomarkers.map(b => {
+              {safeBiomarkers.map(b => {
                 const isEnabled = isBiomarkerAlertEnabled(b.id, b, userProfile);
                 return (
                   <div

@@ -59,7 +59,7 @@ export const TopBar: React.FC<{
   const isToday = selectedDate === new Date().toISOString().split('T')[0];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#080c14]/95 backdrop-blur-md border-b border-slate-800/80 pt-[calc(env(safe-area-inset-top,0px)+0.5rem)] pb-2.5 px-3 sm:px-4">
+    <header className="sticky top-0 z-40 bg-[#080c14]/95 backdrop-blur-md border-b border-slate-800/80 ios-header-padding pl-[max(env(safe-area-inset-left,0px),0.75rem)] pr-[max(env(safe-area-inset-right,0px),0.75rem)] px-3 sm:px-4">
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-1.5 sm:gap-2">
         {/* Zone 1: Wordmark & Memorie Activa indicator */}
         <div className="flex items-center gap-2 shrink-0 min-w-0">
@@ -157,7 +157,7 @@ export const BottomTabBar: React.FC<{
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#080c14]/95 backdrop-blur-lg border-t border-slate-800/90 pb-[max(env(safe-area-inset-bottom,0px),0.25rem)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#080c14]/95 backdrop-blur-lg border-t border-slate-800/90 pb-[max(env(safe-area-inset-bottom,0px),0.5rem)]">
       <div className="max-w-md mx-auto grid grid-cols-6 h-16 items-center px-1">
         {tabs.map(tab => {
           const Icon = tab.icon;

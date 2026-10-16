@@ -41,7 +41,7 @@ import {
   LabDocument,
   AIInsight
 } from './types/protocol';
-import { DEFAULT_USER_PROFILE } from './data/protocolData';
+import { DEFAULT_USER_PROFILE, PROTOCOL_BIOMARKERS } from './data/protocolData';
 import { generateDeterministicInsights } from './utils/deterministicEngine';
 import {
   calculateLongitudinalMetrics,
@@ -71,7 +71,7 @@ export default function App() {
   const [intakes, setIntakes] = useState<SupplementIntake[]>([]);
   const [workouts, setWorkouts] = useState<WorkoutSession[]>([]);
   const [measurements, setMeasurements] = useState<BodyMeasurement[]>([]);
-  const [biomarkers, setBiomarkers] = useState<BiomarkerDefinition[]>([]);
+  const [biomarkers, setBiomarkers] = useState<BiomarkerDefinition[]>(PROTOCOL_BIOMARKERS);
   const [labResults, setLabResults] = useState<LabResult[]>([]);
   const [labDocuments, setLabDocuments] = useState<LabDocument[]>([]);
   const [aiInsights, setAiInsights] = useState<AIInsight[]>([]);
@@ -469,7 +469,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/20 selection:text-cyan-200">
+    <div className="min-h-screen min-h-[100dvh] bg-[#080c14] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/20 selection:text-cyan-200 overflow-x-clip">
       <OfflineIndicator />
 
       {/* Top Bar Navigation */}
@@ -483,7 +483,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-4xl mx-auto pt-2 px-3 sm:px-4 pb-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] overflow-x-hidden">
+      <main className="flex-1 w-full max-w-4xl mx-auto pt-4 sm:pt-5 px-3 sm:px-4 pb-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] overflow-x-clip">
         {!isMemoryActive && showStorageWarning && (
           <div className="mb-3">
             <StorageWarningBanner onDismiss={() => setShowStorageWarning(false)} />
