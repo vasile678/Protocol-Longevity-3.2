@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { HealthOSWelcome } from './HealthOSWelcome';
 import {
   Moon,
   Flame,
@@ -241,6 +242,14 @@ export const TodayTab: React.FC<TodayTabProps> = ({
 
   return (
     <div className="space-y-4 max-w-4xl mx-auto px-1 sm:px-2 pb-6">
+      <HealthOSWelcome
+        selectedDate={selectedDate}
+        sleepHours={dailyLog?.sleepHours}
+        supplementCompleted={completedCount}
+        supplementScheduled={scheduledCount}
+        labCount={labResults.length}
+        onNavigate={onNavigateToTab}
+      />
       {/* EXECUTIVE HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-1 border-b border-slate-800/70">
         <div>
